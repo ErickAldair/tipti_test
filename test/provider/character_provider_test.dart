@@ -23,7 +23,7 @@ void main() {
       when(() => mockApiService.fetchCharacters(page: 1))
           .thenAnswer((_) async => fetchedCharacters);
 
-      characterProvider.fetchCharacters();
+      await characterProvider.fetchCharacters();
 
       // assert
       expect(characterProvider.characters.length, 2);

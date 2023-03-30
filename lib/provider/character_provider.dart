@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../model/person_model.dart';
+import '../model/character_model.dart';
 import '../service/api_service.dart';
 
 /// A provider class that manages the list of characters fetched from the API.
@@ -32,7 +32,7 @@ class CharacterProvider with ChangeNotifier {
   ///
   /// Only one fetch operation can be in progress at a time. Subsequent calls to
   /// this method while a fetch operation is in progress will be ignored.
-  void fetchCharacters() async {
+  Future<void> fetchCharacters() async {
     if (!_isLoading) {
       _isLoading = true;
       notifyListeners();

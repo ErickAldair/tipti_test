@@ -1,8 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test_aplication/provider/character_provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_test_aplication/widget/cube_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 // This is the main widget that displays the list of Star Wars characters.
 class CharacterScreen extends StatefulWidget {
@@ -97,7 +99,7 @@ class _CharacterScreenState extends State<CharacterScreen> {
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
-                  background: GyroscopeLogo(),
+                  background: _GyroscopeLogo(),
                 ),
               ),
               SliverList(
@@ -129,6 +131,44 @@ class _CharacterScreenState extends State<CharacterScreen> {
           return const Center(child: Text('No hay personajes disponibles'));
         }
       }),
+    );
+  }
+}
+
+class _GyroscopeLogo extends StatefulWidget {
+  const _GyroscopeLogo({Key key}) : super(key: key);
+
+  @override
+  State<_GyroscopeLogo> createState() => _GyroscopeLogoState();
+}
+
+class _GyroscopeLogoState extends State<_GyroscopeLogo> {
+  GyroscopeEvent _gyroscopeEvent;
+  StreamSubscription<GyroscopeEvent> _gyroscopeSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    _gyroscopeSubscription = gyroscopeEvents.listen((event) {
+      setState(() {
+        _gyroscopeEvent = event;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _gyroscopeSubscription?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double rotationX = _gyroscopeEvent?.x ?? 0;
+    double rotationY = _gyroscopeEvent?.y ?? 0;
+    return Transform(
+      transform: Matrix4.rotationX(rotationX) * Matrix4.rotationY(rotationY),
+      child: Image.asset('assets/images/logo.png'),
     );
   }
 }

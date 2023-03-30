@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_test_aplication/model/person_model.dart';
-import 'package:flutter_test_aplication/view/home_page.dart';
+import 'package:flutter_test_aplication/model/character_model.dart';
+import 'package:flutter_test_aplication/view/character_screen.dart';
 import 'package:mocktail/mocktail.dart';
 
 import 'package:flutter_test_aplication/provider/character_provider.dart';
